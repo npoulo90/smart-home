@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "minor_version": 8,
+  "key": "core.device_registry",
+  "data": {
+    "devices": [
+      {"area_id":null,"config_entries":["01JK4HDQPB16YX8R5PEPWDHNZA"],"configuration_url":null,"connections":[],"created_at":"2025-02-02T23:55:06.830395+00:00","disabled_by":null,"entry_type":"service","hw_version":null,"id":"ccaa7d6c820f52c1b0b33bd6dfdd5d4c","identifiers":[["sun","01JK4HDQPB16YX8R5PEPWDHNZA"]],"labels":[],"manufacturer":null,"model":null,"model_id":null,"modified_at":"2025-02-02T23:55:06.830436+00:00","name_by_user":null,"name":"Sun","primary_config_entry":"01JK4HDQPB16YX8R5PEPWDHNZA","serial_number":null,"sw_version":null,"via_device_id":null}
+    ],
+    "deleted_devices": []
+  }
+}

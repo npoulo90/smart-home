@@ -1,0 +1,68 @@
+services:
+  traefik:
+    image: traefik:v2.10
+    command:
+      # Core configuration
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+
+      # TLS/HTTPS (Let's Encrypt)
+      - "--certificatesresolvers.letsencrypt.acme.email=your@email.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/certs/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+
+      # Security
+      - "--providers.docker.exposedbydefault=false"
+      - "--accesslog=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:      
+      - /var/run/docker.sock:/var/run/docker.sock  
+      - ./infra/traefik/certs:/certs
+    networks:
+      - frontend
+
+  api-gateway:
+    build:
+      context: ./services/api-gateway  # Correct context
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    labels:
+      - "traefik.http.routers.api-gateway.rule=Host(`api.localhost`)"
+    networks:
+      - frontend
+      - backend
+  vault:
+    image: hashicorp/vault   
+    container_name: vault
+    volumes:
+      - ./infra/vault:/vault/config
+      - ./vault.hcl:/vault/config/vault.hcl  # Mount your Vault config file
+    ports:
+      - "8200:8200"
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=myroot
+    cap_add:
+      - IPC_LOCK
+    command: server -dev
+    networks:
+      - backend
+
+  homeassistant:
+    build:
+      context: ./services/smart-home/app  # Update path to app directory
+      dockerfile: ../Dockerfile            # Look for Dockerfile one level up
+    container_name: homeassistant
+    volumes:
+      - ./infra/homeassistant:/config
+    ports:
+      - "8123:8123"
+
+networks:
+  frontend:
+  backend:
+    internal: true
+
