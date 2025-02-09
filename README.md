@@ -1,36 +1,24 @@
 # Smart Home Project
 
 ## Project Structure
-```
 ├── infra/ # Infrastructure configurations
-│   ├── traefik/ # Reverse proxy setup
-│   └── vault/ # Secrets management
+│ ├── traefik/ # Reverse proxy setup
+│ └── vault/ # Secrets management
 ├── services/ # Core application services
-│   ├── api-gateway/ # Central control API
-│   ├── kroger-api/ # Grocery API integration
-│   └── smart-home/ # Home automation configs
+│ ├── api-gateway/ # Central control API
+│ ├── kroger-api/ # Grocery API integration
+│ ├── llm/ # Language model integration
+│ ├── smart-home/ # Home automation configs
+│ └── airflow/ # Batch job scheduling
 ├── scripts/ # Deployment/maintenance scripts
 ├── docker-compose.yml # Main compose file
 └── Makefile # Development shortcuts
-```
 
 ## Quick Start
-
-To deploy the services, use the following command:
 
 ```bash
 make deploy
 ```
-
-### Available Commands:
-- **start**: Start all services in detached mode.
-  ```bash
-  make start
-  ```
-- **stop**: Stop all running services.
-  ```bash
-  make stop
-  ```
 
 ### Features:
 1. Creates the complete directory structure
@@ -53,6 +41,3 @@ After running, you'll have:
 - Sensible defaults for development
 
 You can then gradually add functionality to each service while maintaining the secure foundation.
-
-### Security Considerations
-- The Vault service is configured for development with a root token. Ensure to change this for production use.
