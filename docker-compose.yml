@@ -36,11 +36,13 @@ services:
       - frontend
       - backend
   vault:
-    image: hashicorp/vault   
+    build:
+      context: ./infra/vault
+      dockerfile: Dockerfile
     container_name: vault
     volumes:
       - ./infra/vault:/vault/config
-      - ./vault.hcl:/vault/config/vault.hcl  # Mount your Vault config file
+      - ./infra/vault/config/vault.hcl:/vault/config/vault.hcl  # Mount your Vault config file
     ports:
       - "8200:8200"
     environment:
@@ -65,4 +67,3 @@ networks:
   frontend:
   backend:
     internal: true
-
